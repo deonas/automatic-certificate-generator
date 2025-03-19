@@ -1,0 +1,41 @@
+
+/* .certificate {
+    width: 297mm;
+    height: 210mm;
+    background-color: #1a365d;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .letter {
+    width: 210mm;
+    height: 297mm;
+    background-color: white;
+    color: black;
+    padding: 20px;
+    box-sizing: border-box;
+  } */
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+  
+  @layer utilities {
+    .bg-gradient-diagonal {
+      background: linear-gradient(135deg, #0A2647 0%, #144272 100%);
+    }
+  }
+  
+  #certificate, #letter {
+    position: fixed;
+    left: -9999px;
+    top: -9999px;
+  }
+  
+  .hidden {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    visibility: visible !important;
+    display: block !important;
+  }
