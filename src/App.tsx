@@ -539,7 +539,7 @@ function App() {
           </h1>
           {/* Company Logo under the certificate title */}
           <img
-            src="src/IMG-20250226-WA0006.jpg"
+            src="/IMG-20250226-WA0006.jpg"
             alt="Company Logo"
             className="h-24 object-contain mx-auto mb-4"
           />
@@ -566,7 +566,7 @@ function App() {
           <div>
             <p className="text-xl mb-4">With Regards,</p>
             <img
-              src="src/IMG-20250319-WA0003-removebg-preview.png"
+              src="/IMG-20250319-WA0003-removebg-preview.png"
               alt="Signature"
               className="h-16 md:h-20 lg:h-24 mb-4 invert brightness-200"
             />
@@ -601,7 +601,7 @@ function App() {
         <div className="container mx-auto">
           <div className="flex items-center">
             <img
-              src="src/IMG-20250226-WA0006.jpg"
+              src="/IMG-20250226-WA0006.jpg"
               alt="Company Logo"
               className="h-10 object-contain"
             />
