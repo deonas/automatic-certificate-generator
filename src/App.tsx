@@ -403,7 +403,7 @@
 // }
 
 // export default App;
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { supabase } from "./lib/supabase";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
@@ -429,6 +429,7 @@ function App() {
   const [endDate, setEndDate] = useState("");
   const [position, setPosition] = useState("");
   const [additionalInfoComplete, setAdditionalInfoComplete] = useState(false);
+  const certificateRef = useRef<HTMLDivElement>(null);
 
   const searchCertificate = async () => {
     try {
@@ -470,11 +471,9 @@ function App() {
     const start = new Date(startDate);
     const end = new Date(endDate);
 
-    // Calculate months difference more accurately
     let months = (end.getFullYear() - start.getFullYear()) * 12;
     months += end.getMonth() - start.getMonth();
 
-    // Adjust for day differences
     if (end.getDate() < start.getDate()) {
       months--;
     }
@@ -483,18 +482,36 @@ function App() {
   };
 
   const downloadCertificate = async () => {
-    const certificateElement = document.getElementById("certificate");
-    if (!certificateElement) return;
+    if (!certificateRef.current) return;
+
     try {
-      // Increase scale for better quality
+      // Set fixed dimensions for the certificate container before capturing
+      const certificateElement = certificateRef.current;
+      const originalStyle = certificateElement.style.cssText;
+
+      // Force the certificate to render at A4 landscape dimensions (297mm x 210mm)
+      // Converting to pixels at 96 DPI (1mm = 3.7795275591 pixels)
+      const width = 1123; // 297mm * 3.7795275591
+      const height = 794; // 210mm * 3.7795275591
+
+      certificateElement.style.width = `${width}px`;
+      certificateElement.style.height = `${height}px`;
+
+      // Wait for the new dimensions to take effect
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
       const canvas = await html2canvas(certificateElement, {
-        scale: 3,
-        logging: false,
+        scale: 2, // Higher scale for better quality
         useCORS: true,
-        backgroundColor: "#051C3C", // Match the background color
+        backgroundColor: "#051C3C",
+        width: width,
+        height: height,
+        logging: false,
       });
 
-      // Use landscape orientation for better fit
+      // Reset the original style
+      certificateElement.style.cssText = originalStyle;
+
       const pdf = new jsPDF({
         orientation: "landscape",
         unit: "mm",
@@ -502,14 +519,12 @@ function App() {
         compress: true,
       });
 
-      // Calculate dimensions to fit the page properly without white space
-      const imgWidth = 297; // A4 width in landscape
-      const imgHeight = 210; // A4 height in landscape
+      // Convert canvas to image
+      const imgData = canvas.toDataURL("image/jpeg", 1.0);
 
-      const imgData = canvas.toDataURL("image/png", 1.0);
+      // Add image to PDF (full page)
+      pdf.addImage(imgData, "JPEG", 0, 0, 297, 210);
 
-      // Add image without margins
-      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
       pdf.save(`${certificate?.name}_internship_certificate.pdf`);
     } catch (error) {
       console.error("Error generating PDF:", error);
@@ -530,8 +545,14 @@ function App() {
     duration: string;
   }) => (
     <div
+      ref={certificateRef}
       id="certificate"
       className="relative w-full aspect-[16/9] bg-[#051C3C] overflow-hidden"
+      style={{
+        width: "100%",
+        maxWidth: "1123px", // A4 landscape width in pixels
+        margin: "0 auto",
+      }}
     >
       {/* Background diagonal shape */}
       <div
@@ -540,12 +561,11 @@ function App() {
       />
       {/* Main content */}
       <div className="relative z-10 h-full flex flex-col text-white p-16">
-        {/* Certificate Header with increased spacing */}
+        {/* Certificate Header */}
         <div className="text-center mb-8">
           <h1 className="text-6xl font-bold tracking-wider mb-12 text-white drop-shadow-lg">
             CERTIFICATE OF INTERNSHIP
           </h1>
-          {/* Company Logo with increased spacing from title */}
           <img
             src="/IMG-20250226-WA0006.jpg"
             alt="Company Logo"
