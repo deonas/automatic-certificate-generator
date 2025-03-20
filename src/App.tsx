@@ -436,7 +436,6 @@ function App() {
       setError("");
       setCertificate(null);
       setShowCertificate(false);
-
       const { data, error } = await supabase
         .from("certificates")
         .select()
@@ -468,7 +467,6 @@ function App() {
 
   const calculateDuration = () => {
     if (!startDate || !endDate) return "";
-
     const start = new Date(startDate);
     const end = new Date(endDate);
 
@@ -487,19 +485,30 @@ function App() {
   const downloadCertificate = async () => {
     const certificateElement = document.getElementById("certificate");
     if (!certificateElement) return;
-
     try {
+      // Increase scale for better quality
       const canvas = await html2canvas(certificateElement, {
-        scale: 2,
+        scale: 3,
         logging: false,
         useCORS: true,
+        backgroundColor: "#051C3C", // Match the background color
       });
 
-      const imgWidth = 297;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      const pdf = new jsPDF("l", "mm", "a4");
-      const imgData = canvas.toDataURL("image/png");
+      // Use landscape orientation for better fit
+      const pdf = new jsPDF({
+        orientation: "landscape",
+        unit: "mm",
+        format: "a4",
+        compress: true,
+      });
 
+      // Calculate dimensions to fit the page properly without white space
+      const imgWidth = 297; // A4 width in landscape
+      const imgHeight = 210; // A4 height in landscape
+
+      const imgData = canvas.toDataURL("image/png", 1.0);
+
+      // Add image without margins
       pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
       pdf.save(`${certificate?.name}_internship_certificate.pdf`);
     } catch (error) {
@@ -529,19 +538,18 @@ function App() {
         className="absolute top-0 left-0 w-2/3 h-full bg-[#0A2647] transform -skew-x-12"
         style={{ zIndex: 1 }}
       />
-
       {/* Main content */}
       <div className="relative z-10 h-full flex flex-col text-white p-16">
-        {/* Certificate Header */}
-        <div className="text-center mb-4">
-          <h1 className="text-6xl font-bold tracking-wider mb-6 text-white drop-shadow-lg">
+        {/* Certificate Header with increased spacing */}
+        <div className="text-center mb-8">
+          <h1 className="text-6xl font-bold tracking-wider mb-12 text-white drop-shadow-lg">
             CERTIFICATE OF INTERNSHIP
           </h1>
-          {/* Company Logo under the certificate title */}
+          {/* Company Logo with increased spacing from title */}
           <img
             src="/IMG-20250226-WA0006.jpg"
             alt="Company Logo"
-            className="h-24 object-contain mx-auto mb-4"
+            className="h-24 object-contain mx-auto mb-6"
           />
         </div>
 
@@ -608,7 +616,6 @@ function App() {
           </div>
         </div>
       </header>
-
       <div className="container mx-auto px-4 py-8 flex-grow">
         <h1 className="text-4xl font-bold text-white text-center mb-8">
           Certificate Generator
