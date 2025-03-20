@@ -485,23 +485,19 @@ function App() {
     if (!certificateRef.current) return;
 
     try {
-      // Set fixed dimensions for the certificate container before capturing
       const certificateElement = certificateRef.current;
       const originalStyle = certificateElement.style.cssText;
 
-      // Force the certificate to render at A4 landscape dimensions (297mm x 210mm)
-      // Converting to pixels at 96 DPI (1mm = 3.7795275591 pixels)
-      const width = 1123; // 297mm * 3.7795275591
-      const height = 794; // 210mm * 3.7795275591
+      const width = 1123;
+      const height = 794;
 
       certificateElement.style.width = `${width}px`;
       certificateElement.style.height = `${height}px`;
 
-      // Wait for the new dimensions to take effect
       await new Promise((resolve) => setTimeout(resolve, 100));
 
       const canvas = await html2canvas(certificateElement, {
-        scale: 2, // Higher scale for better quality
+        scale: 2,
         useCORS: true,
         backgroundColor: "#051C3C",
         width: width,
@@ -509,7 +505,6 @@ function App() {
         logging: false,
       });
 
-      // Reset the original style
       certificateElement.style.cssText = originalStyle;
 
       const pdf = new jsPDF({
@@ -519,10 +514,7 @@ function App() {
         compress: true,
       });
 
-      // Convert canvas to image
       const imgData = canvas.toDataURL("image/jpeg", 1.0);
-
-      // Add image to PDF (full page)
       pdf.addImage(imgData, "JPEG", 0, 0, 297, 210);
 
       pdf.save(`${certificate?.name}_internship_certificate.pdf`);
@@ -550,26 +542,28 @@ function App() {
       className="relative w-full aspect-[16/9] bg-[#051C3C] overflow-hidden"
       style={{
         width: "100%",
-        maxWidth: "1123px", // A4 landscape width in pixels
+        maxWidth: "1123px",
         margin: "0 auto",
       }}
     >
-      {/* Background diagonal shape */}
       <div
         className="absolute top-0 left-0 w-2/3 h-full bg-[#0A2647] transform -skew-x-12"
         style={{ zIndex: 1 }}
       />
-      {/* Main content */}
       <div className="relative z-10 h-full flex flex-col text-white p-16">
         {/* Certificate Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-6xl font-bold tracking-wider mb-12 text-white drop-shadow-lg">
+        <div className="text-center mb-2">
+          {" "}
+          {/* Reduced mb-8 to mb-2 */}
+          <h1 className="text-6xl font-bold tracking-wider mb-6 text-white drop-shadow-lg">
+            {" "}
+            {/* Reduced mb-12 to mb-6 */}
             CERTIFICATE OF INTERNSHIP
           </h1>
           <img
             src="/IMG-20250226-WA0006.jpg"
             alt="Company Logo"
-            className="h-24 object-contain mx-auto mb-6"
+            className="h-20 object-contain mx-auto mb-2"
           />
         </div>
 
@@ -596,7 +590,7 @@ function App() {
             <img
               src="/IMG-20250319-WA0003-removebg-preview.png"
               alt="Signature"
-              className="h-16 md:h-20 lg:h-24 mb-4 invert brightness-200"
+              className="h-20 md:h-24 lg:h-28 mb-4 invert brightness-200"
             />
             <p className="text-lg">
               Yash Kulkarni
@@ -614,17 +608,15 @@ function App() {
         </div>
 
         {/* Contact information */}
-        <div className="text-center mt-8">
+        <div className="text-center mt-8 w-full">
           <p className="text-lg">purplerain.studio08@gmail.com</p>
           <p className="text-lg">PurpleRain.framer.ai</p>
         </div>
       </div>
     </div>
   );
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex flex-col">
-      {/* Website header with logo in far left */}
       <header className="bg-black/30 p-2">
         <div className="container mx-auto">
           <div className="flex items-center">
