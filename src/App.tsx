@@ -523,6 +523,99 @@ function App() {
     }
   };
 
+  // const CertificateTemplate = ({
+  //   name,
+  //   position,
+  //   startDate,
+  //   endDate,
+  //   duration,
+  // }: {
+  //   name: string;
+  //   position: string;
+  //   startDate: string;
+  //   endDate: string;
+  //   duration: string;
+  // }) => (
+  //   <div
+  //     ref={certificateRef}
+  //     id="certificate"
+  //     className="relative w-full aspect-[16/9] bg-[#051C3C] overflow-hidden"
+  //     style={{
+  //       width: "100%",
+  //       maxWidth: "1123px",
+  //       margin: "0 auto",
+  //     }}
+  //   >
+  //     <div
+  //       className="absolute top-0 left-0 w-2/3 h-full bg-[#0A2647] transform -skew-x-12"
+  //       style={{ zIndex: 1 }}
+  //     />
+  //     <div className="relative z-10 h-full flex flex-col text-white p-16">
+  //       {/* Certificate Header */}
+  //       <div className="text-center mb-2">
+  //         {" "}
+  //         {/* Keep mb-2 for the outer div */}
+  //         <h1 className="text-6xl font-bold tracking-wider mb-12 text-white drop-shadow-lg">
+  //           {" "}
+  //           {/* Increased mb-6 to mb-12 */}
+  //           CERTIFICATE OF INTERNSHIP
+  //         </h1>
+  //         <img
+  //           src="/IMG-20250226-WA0006.jpg"
+  //           alt="Company Logo"
+  //           className="h-20 object-contain mx-auto mb-2"
+  //         />
+  //       </div>
+
+  //       {/* Certificate content */}
+  //       <div className="text-center mb-8">
+  //         <p className="text-xl mb-2">This certificate is presented to:</p>
+  //         <h2 className="text-5xl font-bold tracking-wide">{name}</h2>
+  //       </div>
+
+  //       {/* Description */}
+  //       <div className="text-center mb-auto">
+  //         <p className="text-xl italic leading-relaxed">
+  //           For successfully completing {duration} of Internship as{" "}
+  //           <span className="font-semibold">{position}</span> with dedication
+  //           and valuable contributions as a key in shaping the team culture and
+  //           helping us grow. We appreciate your efforts and wish you success in
+  //           your future endeavours.
+  //         </p>
+  //       </div>
+
+  //       {/* Footer section */}
+  //       <div className="mt-auto flex justify-between items-end">
+  //         <div>
+  //           <p className="text-xl mb-4">With Regards,</p>
+  //           <img
+  //             src="/IMG-20250319-WA0003-removebg-preview.png"
+  //             alt="Signature"
+  //             className="h-20 md:h-24 lg:h-28 mb-4 invert brightness-200"
+  //           />
+  //           <p className="text-lg">
+  //             Yash Kulkarni
+  //             <br />
+  //             Founder & CEO
+  //             <br />
+  //             PURPLERAIN TECHSAFE
+  //           </p>
+  //         </div>
+
+  //         <div className="text-right text-lg">
+  //           <p>FROM - {new Date(startDate).toLocaleDateString()}</p>
+  //           <p>TO - {new Date(endDate).toLocaleDateString()}</p>
+  //         </div>
+  //       </div>
+
+  //       {/* Contact information */}
+  //       <div className="text-center mt-1 w-full">
+  //         <p className="text-lg">purplerain.studio08@gmail.com</p>
+  //         <p className="text-lg">PurpleRain.framer.ai</p>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
   const CertificateTemplate = ({
     name,
     position,
@@ -550,14 +643,14 @@ function App() {
         className="absolute top-0 left-0 w-2/3 h-full bg-[#0A2647] transform -skew-x-12"
         style={{ zIndex: 1 }}
       />
-      <div className="relative z-10 h-full flex flex-col text-white p-16">
-        {/* Certificate Header */}
+      <div className="relative z-10 h-full flex flex-col text-white p-16 pt-12">
+        {" "}
+        {/* Reduced top padding */}
+        {/* Certificate Header - moved up */}
         <div className="text-center mb-2">
-          {" "}
-          {/* Reduced mb-8 to mb-2 */}
-          <h1 className="text-6xl font-bold tracking-wider mb-6 text-white drop-shadow-lg">
+          <h1 className="text-6xl font-bold tracking-wider mb-8 text-white drop-shadow-lg">
             {" "}
-            {/* Reduced mb-12 to mb-6 */}
+            {/* Reduced bottom margin */}
             CERTIFICATE OF INTERNSHIP
           </h1>
           <img
@@ -566,25 +659,27 @@ function App() {
             className="h-20 object-contain mx-auto mb-2"
           />
         </div>
-
-        {/* Certificate content */}
-        <div className="text-center mb-8">
+        {/* Certificate content - reduced margin */}
+        <div className="text-center mb-6">
+          {" "}
+          {/* Reduced bottom margin */}
           <p className="text-xl mb-2">This certificate is presented to:</p>
           <h2 className="text-5xl font-bold tracking-wide">{name}</h2>
         </div>
-
         {/* Description */}
         <div className="text-center mb-auto">
           <p className="text-xl italic leading-relaxed">
-            For successfully completing {duration} of Internship in{" "}
+            For successfully completing {duration} of Internship as{" "}
             <span className="font-semibold">{position}</span> with dedication
             and valuable contributions as a key in shaping the team culture and
-            helping us grow.
+            helping us grow. We appreciate your efforts and wish you success in
+            your future endeavours.
           </p>
         </div>
-
-        {/* Footer section */}
-        <div className="mt-auto flex justify-between items-end">
+        {/* Footer section - more space above */}
+        <div className="mt-6 flex justify-between items-end">
+          {" "}
+          {/* Reduced top margin */}
           <div>
             <p className="text-xl mb-4">With Regards,</p>
             <img
@@ -600,15 +695,15 @@ function App() {
               PURPLERAIN TECHSAFE
             </p>
           </div>
-
           <div className="text-right text-lg">
             <p>FROM - {new Date(startDate).toLocaleDateString()}</p>
             <p>TO - {new Date(endDate).toLocaleDateString()}</p>
           </div>
         </div>
-
-        {/* Contact information */}
-        <div className="text-center mt-8 w-full">
+        {/* Contact information - significantly moved up */}
+        <div className="text-center mt-2 w-full">
+          {" "}
+          {/* Reduced margin-top for contact info */}
           <p className="text-lg">purplerain.studio08@gmail.com</p>
           <p className="text-lg">PurpleRain.framer.ai</p>
         </div>
